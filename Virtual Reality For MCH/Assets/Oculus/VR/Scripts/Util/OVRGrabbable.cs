@@ -30,6 +30,8 @@ public class OVRGrabbable : MonoBehaviour
     [SerializeField]
     protected Collider[] m_grabPoints = null;
 
+    [SerializeField] private bool isLerning = true;
+
     [SerializeField] private GameObject[] LineRender;
     [SerializeField] private GameObject[] sphereEndLine;
     [SerializeField] private GameObject InfoIconB;
@@ -128,7 +130,7 @@ public class OVRGrabbable : MonoBehaviour
         m_grabbedCollider = grabPoint;
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
 
-        if (isExecuter)
+        if (isExecuter && isLerning)
         {
             for (int i = 0; i < 2; i++)
             {
@@ -140,7 +142,7 @@ public class OVRGrabbable : MonoBehaviour
             InfoIconB.SetActive(false);
             InfoIconA.SetActive(false);
 
-            if (isStartInfo)
+            if (isStartInfo && isLerning)
             {
                 StartCoroutine(ChekaInformation());
                 isStartInfo = false;
@@ -172,25 +174,36 @@ public class OVRGrabbable : MonoBehaviour
         m_grabbedBy = null;
         m_grabbedCollider = null;
 
-        if (isExecuter)
+
+        if (isLerning)
         {
-            for (int i = 0; i < 2; i++)
+            if (isExecuter)
             {
-                sphereEndLine[i].SetActive(true);
-                LineRender[i].SetActive(true);
-                LineRender[i].gameObject.GetComponent<Renderer>().material = materiaLine;
+                for (int i = 0; i < 2; i++)
+                {
+                    sphereEndLine[i].SetActive(true);
+                    LineRender[i].SetActive(true);
+                    LineRender[i].gameObject.GetComponent<Renderer>().material = materiaLine;
+                }
+
+                ChekaInfo.SetActive(false);
+
             }
+            else
+            {
+                ChekaForExecuter.gameObject.GetComponent<Rigidbody>().useGravity = true;
+                ChekaForExecuter.gameObject.GetComponent<Rigidbody>().isKinematic = false;
 
-            ChekaInfo.SetActive(false);
-
+                ChekaInfo.SetActive(false);
+            }
         }
-        else
+
+        if(ChekaForExecuter!= null)
         {
             ChekaForExecuter.gameObject.GetComponent<Rigidbody>().useGravity = true;
             ChekaForExecuter.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-
-            ChekaInfo.SetActive(false);
         }
+     
 
     }
 

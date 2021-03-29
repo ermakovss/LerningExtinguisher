@@ -9,6 +9,9 @@ TagManager:
   - extinguisher
   - DialogButton
   - BattonNext
+  - Hand
+  - HandLeft
+  - HandRigth
   layers:
   - Default
   - TransparentFX
