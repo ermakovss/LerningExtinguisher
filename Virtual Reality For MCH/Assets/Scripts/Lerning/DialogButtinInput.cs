@@ -30,11 +30,6 @@ public class DialogButtinInput : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 2f))
         {
-            if (hit.collider.gameObject.name == "BattonNext")
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            }
-
             if (hit.collider.gameObject.name == "DialogButton")
             {
                 DialogButtonInputPanel();

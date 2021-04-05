@@ -12,6 +12,7 @@ TagManager:
   - Hand
   - HandLeft
   - HandRigth
+  - Fire
   layers:
   - Default
   - TransparentFX

@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class ChekaExitExtinguisher : MonoBehaviour
 {
-    public static bool isExitCheck = false;
+    public static bool isExitCheck;
+
+    private void Start()
+    {
+        isExitCheck = false;
+    }
 
     void Update()
     {

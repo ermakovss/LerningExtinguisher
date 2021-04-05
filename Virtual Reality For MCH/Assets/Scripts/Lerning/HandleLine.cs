@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HandleLine : MonoBehaviour
 {
@@ -15,10 +16,14 @@ public class HandleLine : MonoBehaviour
 
     private LineRenderer line;
 
+    public static bool isStartCituation;
+
     private void Start()
     {
+        isStartCituation = false;
         line = GetComponent<LineRenderer>();
     }
+
 
     private void Update()
     {
@@ -32,9 +37,15 @@ public class HandleLine : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 2f))
         {
+            if(hit.collider.name == "ButtonExit" && OVRInput.Get(OVRInput.Button.One))
+            {
+                SceneManager.LoadScene("StartInfo");
+            }
             
            if (hit.collider.gameObject.tag == "ActiveItem" || hit.collider.gameObject.tag == "extinguisher")
            {
+                isStartCituation = true;
+
                 if (hit.distance > 0.8f || hit.collider.gameObject.name == "DialogButton")
                 {
                     sphereEndLine.transform.position = hit.point;

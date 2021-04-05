@@ -10,10 +10,12 @@ public class TransformHandle : MonoBehaviour
     private Vector3 newPositionHandle;
     private Vector3 newRotationHandle;
 
-    public static bool isInputHandle = false;
+    public static bool isInputHandle;
 
     private void Start()
     {
+        isInputHandle = false;
+
         PositionHandle = this.transform.localPosition;
         RotationHandle = this.transform.localEulerAngles;
 
@@ -21,32 +23,23 @@ public class TransformHandle : MonoBehaviour
         newRotationHandle = new Vector3(6.8f, 2.33f, 4.05f);
     }
 
-
-    private void Update()
-    {
-        if (OVRInput.Get(OVRInput.RawButton.LIndexTrigger)) Debug.Log("ermakkkkkkkkk");
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "HandLeft" && OVRInput.Get(OVRInput.RawButton.LIndexTrigger))
-        {   this.transform.localPosition = newPositionHandle;
+        {
+            this.transform.localPosition = newPositionHandle;
+            this.transform.localEulerAngles = newRotationHandle;
+
+            isInputHandle = true;
+        }
+        else if (other.tag == "HandRigth" && OVRInput.Get(OVRInput.RawButton.RIndexTrigger))
+        {
+            this.transform.localPosition = newPositionHandle;
             this.transform.localEulerAngles = newRotationHandle;
 
             isInputHandle = true;
         }
         else
-        {
-            this.transform.localPosition = PositionHandle;
-            this.transform.localEulerAngles = RotationHandle;
-
-            isInputHandle = false;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.tag == "Hand")
         {
             this.transform.localPosition = PositionHandle;
             this.transform.localEulerAngles = RotationHandle;
